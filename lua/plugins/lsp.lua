@@ -6,7 +6,7 @@ return {
     {
         "williamboman/mason-lspconfig.nvim",
         opts = {
-            ensure_installed = { "astro", "texlab", "clangd", "rust_analyzer", "gopls", "bashls" },
+            ensure_installed = { "astro", "texlab", "clangd", "rust_analyzer", "gopls", "bashls", "yamlls" },
         },
     },
     {
@@ -81,6 +81,35 @@ return {
             lspconfig("bashls", {
                 on_attach = on_attach,
                 capabilities = capabilities,
+            })
+
+            lspconfig("yamlls", {
+                on_attach = on_attach,
+                capabilities = capabilities,
+                settings = {
+                    yaml = {
+                        completion = true,
+                        hover = true,
+                        validate = true,
+                        schemas = {
+                            kubernetes = {
+                                "k8s/**/*.yaml",
+                                "k8s/**/*.yml",
+                                "kubernetes/**/*.yaml",
+                                "kubernetes/**/*.yml",
+                                "manifests/**/*.yaml",
+                                "manifests/**/*.yml",
+                                "deploy/**/*.yaml",
+                                "deploy/**/*.yml",
+                                "*.k8s.yaml",
+                                "*.k8s.yml",
+                            },
+                        },
+                        kubernetesCRDStore = {
+                            enable = true,
+                        },
+                    },
+                },
             })
         end,
     },
