@@ -5,6 +5,7 @@ return {
     },
     {
         "williamboman/mason-lspconfig.nvim",
+        dependencies = { "williamboman/mason.nvim" },
         opts = {
             ensure_installed = { "astro", "texlab", "clangd", "rust_analyzer", "gopls", "bashls", "yamlls" },
         },
