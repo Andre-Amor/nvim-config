@@ -1,13 +1,23 @@
 return {
     {
         "nvim-treesitter/nvim-treesitter",
+        branch = "main", -- Required for Neovim 0.11+; the legacy "master" branch is incompatible
+        lazy = false,
         build = ":TSUpdate",
         config = function()
-            require("nvim-treesitter.configs").setup {
-                highlight = { enable = true },
-                indent = { enable = true },
-                ensure_installed = { "astro", "javascript", "typescript", "html", "css" },
-            }
+            local ensure_installed = { "astro", "javascript", "typescript", "html", "css" }
+            require("nvim-treesitter").install(ensure_installed)
+
+            vim.api.nvim_create_autocmd("FileType", {
+                callback = function(args)
+                    -- Enable treesitter highlighting if a parser is available
+                    if not pcall(vim.treesitter.start, args.buf) then
+                        return
+                    end
+                    -- Treesitter-based indentation
+                    vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+                end,
+            })
         end,
     },
     {
