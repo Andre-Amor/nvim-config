@@ -5,7 +5,7 @@ return {
         lazy = false,
         build = ":TSUpdate",
         config = function()
-            local ensure_installed = { "astro", "javascript", "typescript", "html", "css" }
+            local ensure_installed = { "astro", "javascript", "typescript", "html", "css", "bash" }
             require("nvim-treesitter").install(ensure_installed)
 
             vim.api.nvim_create_autocmd("FileType", {
