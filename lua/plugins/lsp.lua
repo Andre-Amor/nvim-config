@@ -23,8 +23,12 @@ return {
                 vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = bufnr })
                 vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = bufnr })
                 vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { buffer = bufnr })
-                vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { buffer = bufnr })
-                vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { buffer = bufnr })
+                vim.keymap.set("n", "[d", function()
+                    vim.diagnostic.jump({ count = -1, float = true })
+                end, { buffer = bufnr })
+                vim.keymap.set("n", "]d", function()
+                    vim.diagnostic.jump({ count = 1, float = true })
+                end, { buffer = bufnr })
                 vim.api.nvim_create_autocmd("BufWritePre", {
                     buffer = bufnr,
                     callback = function()
